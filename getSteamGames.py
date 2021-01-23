@@ -1,4 +1,4 @@
-import bs4, re, requests, sys
+import re #, bs4, requests, sys
 
 pfad = "steamHTML\\" # all steam-user HTML-Files should be placed in this directory
 dateiname1="SteamGames1.html"
@@ -14,7 +14,7 @@ def getGames(PATH):
 
     in_file = open(PATH,"r",encoding="utf8")
     text = in_file.read()
-    soup = bs4.BeautifulSoup(text, "html.parser")
+    # soup = bs4.BeautifulSoup(text, "html.parser")
     in_file.close()
         
     games = ([])
