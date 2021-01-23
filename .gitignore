@@ -1,0 +1,6 @@
+# ignore html files
+*.html
+
+# ignore HTML-Folder
+steamHTML/
+
