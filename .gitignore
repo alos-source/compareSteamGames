@@ -1,6 +1,9 @@
 # ignore html files
 *.html
 
+# ignore runtime files
+*.log
+
 # ignore HTML-Folder
 steamHTML/
 
