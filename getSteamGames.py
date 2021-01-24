@@ -1,6 +1,6 @@
 #! python3
 
-import logging, re, bs4, requests#, sys
+import logging, re#, bs4, requests, sys
 logging.basicConfig(filename="steamGames.log", level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s)")
 
 logging.debug("Start of programm")
@@ -16,12 +16,13 @@ datei3 = pfad+dateiname3
 
 # Create Games-Array by STEAM-User HTML File
 def getGamesIDs(PATH):
-    
-    in_file = open(PATH,"r",encoding="utf8")
-    text = in_file.read()
-    soup = bs4.BeautifulSoup(text, "html.parser")
-    in_file.close()
-        
+
+    try:
+        with open(PATH,encoding="utf8") as f:
+            text = f.read()
+    except IOError:
+        print("File not accessible")
+              
     games = ([])
     games = re.findall("game_\d\d\d+", text)
     logging.debug("Start: "+PATH)
@@ -33,18 +34,20 @@ def getGamesIDs(PATH):
 # Create Games-Array by STEAM-User HTML File
 def getGamesNames(PATH):
     
-    in_file = open(PATH,"r",encoding="utf8")
-    text = in_file.read()
-    soup = bs4.BeautifulSoup(text, "html.parser")
-    in_file.close()
-        
+    try:
+        with open(PATH,encoding="utf8") as f:
+            text = f.read()
+    except IOError:
+        print("File not accessible")
+    
+    userName = re.findall(":: \w+", text) # Select User Name from File
     games = ([])
     games = re.findall("""Name ellipsis ">.+""", text) # Pattern contains 14 chars to be in line with following patterns 
     games = games + re.findall("""or_uninstalled">.+""", text) # own games list contains also tags: ellipsis color_uninstalled"
     games = games + re.findall("""color_disabled">.+""", text) # own games list contains also tags: ellipsis color_disabled"
     logging.debug("Start: "+PATH)
     logging.debug(games)
-    logging.info(PATH+" Number of games from Names: "+str(len(games)))
+    logging.info(PATH+" Number of games from "+ str(userName[0]) +" by Names: "+str(len(games)))
     logging.debug("Finished "+PATH)
     return games
 
@@ -106,3 +109,4 @@ print ((common_games2))
 #print ("found: "+str(len(common_games2))+"games: "+getNames(common_games2))
 
 logging.debug("End of program")
+
