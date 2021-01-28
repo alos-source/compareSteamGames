@@ -4,6 +4,7 @@ import logging, re#, bs4, requests, sys
 import tkinter as tk
 from tkinter.filedialog import askopenfilename
 from pathlib import Path
+import csv
 
 
 logging.basicConfig(filename="steamGames.log", level=logging.DEBUG, format="%(asctime)s - %(levelname)s - %(message)s)")
@@ -14,10 +15,13 @@ pfad = "steamHTML\\" # all steam-user HTML-Files should be placed in this direct
 dateiname1="SteamGames1.html"
 dateiname2="SteamGames2.html"
 dateiname3="SteamGames3.html"
+configname="config.cfg"
 
+files=[]
 datei1 = pfad+dateiname1
 datei2 = pfad+dateiname2
 datei3 = pfad+dateiname3
+config = configname
 #item = tk.StringVar()
 
 def cb(event):
@@ -27,6 +31,21 @@ def select(event):
     i = commonbox.curselection()[0]
     item.set(items[i])
     print(str(event) + '\n' + str(item))
+
+def loadConfig():
+    try:
+        with open(config,encoding="utf8") as f:
+            csvReader = csv.reader(f)
+            for row in csvReader:
+                files.append(row[0])
+            #text = f.read()
+            logging.debug("config loaded: "+ files[0]+ files[1])
+            entry_Path1.insert(0,files[0])
+            entry_Path2.insert(0,files[1])
+            entry_Path3.insert(0,files[2])
+    except IOError:
+        print("File not accessible")
+    
 
 # Create Games-Array by STEAM-User HTML File
 def getGamesIDs(PATH):
@@ -138,6 +157,7 @@ def open_file3():
 common_games1 = ([])
 common_games2= ([])
 
+
 def run1():
     getGamesNames(str(entry_Path1.get()))
 
@@ -245,6 +265,8 @@ label_output.pack()
 commonbox = tk.Listbox(frame_output)
 commonbox.pack()
 #commonbox.place(width=80, height=180)
+
+loadConfig()
 
 logging.debug("End of program")
 

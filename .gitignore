@@ -3,6 +3,7 @@
 
 # ignore runtime files
 *.log
+*.cfg
 
 # ignore HTML-Folder
 steamHTML/
