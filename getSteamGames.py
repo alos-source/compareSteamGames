@@ -29,38 +29,38 @@ config = configname
 # Create Games-Array by STEAM-User HTML File
 def getGamesIDs(PATH):
     logging.debug("Start: "+PATH)
+    games = ([])
     try:
         with open(PATH,encoding="utf8") as f:
             text = f.read()
+            games = re.findall("game_\d\d\d+", text)
+            logging.debug(games)
+            logging.info(PATH+" Number of games from IDs: "+str(len(games)))
+            logging.debug("Finished "+PATH)
     except IOError:
         print("File not accessible")
-              
-    games = ([])
-    games = re.findall("game_\d\d\d+", text)
     
-    logging.debug(games)
-    logging.info(PATH+" Number of games from IDs: "+str(len(games)))
-    logging.debug("Finished "+PATH)
     return games
 
 # Create Games-Array by STEAM-User HTML File
 def getGamesNames(PATH):
     logging.debug("Start getGamesNames: "+PATH)
-        
+    games = ([])
+    userName = ([])
+    
     try:
         with open(PATH,encoding="utf8") as f:
             text = f.read()
+            userName = re.findall(":: \w+", text) # Select User Name from File
+            games = re.findall("""Name ellipsis ">.+""", text) # Pattern contains 14 chars to be in line with following patterns 
+            games = games + re.findall("""or_uninstalled">.+""", text) # own games list contains also tags: ellipsis color_uninstalled"
+            games = games + re.findall("""color_disabled">.+""", text) # own games list contains also tags: ellipsis color_disabled"
+            logging.debug(games)
+            logging.info(PATH+" Number of games from "+ str(userName[0]) +" by Names: "+str(len(games)))
     except IOError:
         print("File not accessible")
+        
     
-    userName = re.findall(":: \w+", text) # Select User Name from File
-    games = ([])
-    games = re.findall("""Name ellipsis ">.+""", text) # Pattern contains 14 chars to be in line with following patterns 
-    games = games + re.findall("""or_uninstalled">.+""", text) # own games list contains also tags: ellipsis color_uninstalled"
-    games = games + re.findall("""color_disabled">.+""", text) # own games list contains also tags: ellipsis color_disabled"
-    
-    logging.debug(games)
-    logging.info(PATH+" Number of games from "+ str(userName[0]) +" by Names: "+str(len(games)))
     logging.debug("Finished "+PATH)
     return games
 
@@ -73,12 +73,19 @@ def compare(PATH1,PATH2,PATH3):
     gamesIDs2 = getGamesIDs(PATH2)
     gamesNames3 = getNames(getGamesNames(PATH3))
     gamesIDs3 = getGamesIDs(PATH3)
+
+    logging.debug("path3"+ PATH3)
+    logging.debug("games3"+ str(getGamesNames(PATH3)))
     
     # Find matches
-    common_games1 = getCommon(gamesNames1, gamesNames3)
+    common_games1 = getCommon(gamesNames1, gamesNames2)
     common_games1ID = getCommon(gamesNames1, gamesNames2)
     #print (common_games1)
-    common_games2 = getCommon(gamesNames2,common_games1)
+    if PATH3 != "":
+        common_games2 = getCommon(gamesNames3,common_games1)
+    else:        
+        print("File3 not accessible")
+        return common_games1
     
     # print ("found games1: ")
     # print ((common_games1))
