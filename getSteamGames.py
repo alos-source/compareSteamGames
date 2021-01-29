@@ -25,7 +25,7 @@ config = configname
 #item = tk.StringVar()
 
 def cb(event):
-    print(str(event) + '\n' + str(commonbox.curselection()))
+    logging.debug(str(event) + '\n' + str(commonbox.curselection()))
 
 def select(event):
     i = commonbox.curselection()[0]
@@ -243,8 +243,8 @@ frame_output.pack()
 
 button_add = tk.Button(frame_buttons, text="run", command=runCompare)
 button_add.pack(side= tk.LEFT)
-button_add1 = tk.Button(frame_buttons, text="read1", command=run1)
-button_add1.pack(side= tk.LEFT)
+#button_add1 = tk.Button(frame_buttons, text="read1", command=run1)
+#button_add1.pack(side= tk.LEFT)
 #button_add = tk.Button(frame_buttons, text="-", command=calc_sub)
 #button_add.pack(side= tk.LEFT)
 #button_add = tk.Button(frame_buttons, text="*", command=calc_add)
