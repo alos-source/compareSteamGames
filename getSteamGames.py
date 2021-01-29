@@ -191,6 +191,7 @@ def runCompare():
         #listboxNamen = Listbox(master=frameListbox, selectmode='browse')
         commonbox.insert('end', game)
 
+    label_output['text']= ("List of common games: "+str(len((common_games2))))
 
 
 
