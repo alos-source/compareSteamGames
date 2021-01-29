@@ -18,34 +18,13 @@ dateiname3="SteamGames3.html"
 configname="config.cfg"
 
 files=[]
+common_games1 = ([])
+common_games2= ([])
 datei1 = pfad+dateiname1
 datei2 = pfad+dateiname2
 datei3 = pfad+dateiname3
 config = configname
-#item = tk.StringVar()
-
-def cb(event):
-    logging.debug(str(event) + '\n' + str(commonbox.curselection()))
-
-def select(event):
-    i = commonbox.curselection()[0]
-    item.set(items[i])
-    print(str(event) + '\n' + str(item))
-
-def loadConfig():
-    try:
-        with open(config,encoding="utf8") as f:
-            csvReader = csv.reader(f)
-            for row in csvReader:
-                files.append(row[0])
-            #text = f.read()
-            logging.debug("config loaded: "+ files[0]+ files[1])
-            entry_Path1.insert(0,files[0])
-            entry_Path2.insert(0,files[1])
-            entry_Path3.insert(0,files[2])
-    except IOError:
-        print("File not accessible")
-    
+   
 
 # Create Games-Array by STEAM-User HTML File
 def getGamesIDs(PATH):
@@ -125,157 +104,143 @@ def defineFileName(filename):
 def askopenfile():
    return askopenfile()
 
-def open_file1():
-    name= askopenfilename(initialdir = "./",title = "Select file",filetypes = (("html-Files","*.html"),("all files","*.*")))
-    print (name)
-    #return name
-    #file = askopenfile(title = "Files", filetypes =[('Python Files', '*.docx')]) 
-    #if file is not None: 
-    #    content = file.read()
-    
-    entry_Path1.delete(0,tk.END)
-    entry_Path1.insert(0,name)
-
-def open_file2():
-    name= askopenfilename(initialdir = "./",title = "Select file",filetypes = (("html-Files","*.html"),("all files","*.*")))
-    print (name)
-    #return name
-    #file = askopenfile(title = "Files", filetypes =[('Python Files', '*.docx')]) 
-    #if file is not None: 
-    #    content = file.read()
-    entry_Path2.delete(0,tk.END)
-    entry_Path2.insert(0,name)
-
-def open_file3():
-    name= askopenfilename(initialdir = "./",title = "Select file",filetypes = (("html-Files","*.html"),("all files","*.*")))
-    print (name)
-    #return name
-    #file = askopenfile(title = "Files", filetypes =[('Python Files', '*.docx')]) 
-    #if file is not None: 
-    #    content = file.read()
-    entry_Path3.delete(0,tk.END)    
-    entry_Path3.insert(0,name)
-
-common_games1 = ([])
-common_games2= ([])
-
 
 def run1():
     getGamesNames(str(entry_Path1.get()))
 
-def runCompare():
-    # Read game lists for three players
-    gamesNames1 = getNames(getGamesNames(str(entry_Path1.get())))
-    gamesIDs1 = getGamesIDs(entry_Path1.get())
-    gamesNames2 = getNames(getGamesNames(entry_Path2.get()))
-    gamesIDs2 = getGamesIDs(entry_Path2.get())
-    gamesNames3 = getNames(getGamesNames(entry_Path3.get()))
-    gamesIDs3 = getGamesIDs(entry_Path3.get())
 
-    # Find matches
-    common_games1 = getCommon(gamesNames1, gamesNames3)
-    common_games1ID = getCommon(gamesNames1, gamesNames2)
-    #print (common_games1)
-    common_games2 = getCommon(gamesNames2,common_games1)
+def __init__():
+    pass
 
-    # print ("found games1: ")
-    # print ((common_games1))
-    logging.info("found common games: " +str(len((common_games2))))
-    print ("found common games: " +str(len((common_games2))))
-    print ((common_games2))
-    #print ("found: "+str(len(common_games2))+"games: "+getNames(common_games2))
+def main():
+    
+    def loadConfig():
+        try:
+            with open(config,encoding="utf8") as f:
+                csvReader = csv.reader(f)
+                for row in csvReader:
+                    files.append(row[0])
+                #text = f.read()
+                logging.debug("config loaded: "+ files[0]+ files[1])
+                entry_Path1.insert(0,files[0])
+                entry_Path2.insert(0,files[1])
+                entry_Path3.insert(0,files[2])
+        except IOError:
+            print("File not accessible")
 
-    commonbox.delete(0,tk.END)
-    commonbox.bind('<<ListboxSelect>>', cb)
-    for game in common_games2:
-        #listboxNamen = Listbox(master=frameListbox, selectmode='browse')
-        commonbox.insert('end', game)
+    def open_file1():
+        name= askopenfilename(initialdir = "./",title = "Select file",filetypes = (("html-Files","*.html"),("all files","*.*")))
+        print (name)
+        #return name
+        #file = askopenfile(title = "Files", filetypes =[('Python Files', '*.docx')]) 
+        #if file is not None: 
+        #    content = file.read()
+        
+        entry_Path1.delete(0,tk.END)
+        entry_Path1.insert(0,name)
 
-    label_output['text']= ("List of common games: "+str(len((common_games2))))
+    def open_file2():
+        name= askopenfilename(initialdir = "./",title = "Select file",filetypes = (("html-Files","*.html"),("all files","*.*")))
+        print (name)
+        #return name
+        #file = askopenfile(title = "Files", filetypes =[('Python Files', '*.docx')]) 
+        #if file is not None: 
+        #    content = file.read()
+        entry_Path2.delete(0,tk.END)
+        entry_Path2.insert(0,name)
 
+    def open_file3():
+        name= askopenfilename(initialdir = "./",title = "Select file",filetypes = (("html-Files","*.html"),("all files","*.*")))
+        print (name)
+        #return name
+        #file = askopenfile(title = "Files", filetypes =[('Python Files', '*.docx')]) 
+        #if file is not None: 
+        #    content = file.read()
+        entry_Path3.delete(0,tk.END)    
+        entry_Path3.insert(0,name)
 
+    def runCompare():
+        # Read game lists for three players
+        gamesNames1 = getNames(getGamesNames(str(entry_Path1.get())))
+        gamesIDs1 = getGamesIDs(entry_Path1.get())
+        gamesNames2 = getNames(getGamesNames(entry_Path2.get()))
+        gamesIDs2 = getGamesIDs(entry_Path2.get())
+        gamesNames3 = getNames(getGamesNames(entry_Path3.get()))
+        gamesIDs3 = getGamesIDs(entry_Path3.get())
+        
+        # Find matches
+        common_games1 = getCommon(gamesNames1, gamesNames3)
+        common_games1ID = getCommon(gamesNames1, gamesNames2)
+        #print (common_games1)
+        common_games2 = getCommon(gamesNames2,common_games1)
+        
+        # print ("found games1: ")
+        # print ((common_games1))
+        logging.info("found common games: " +str(len((common_games2))))
+        print ("found common games: " +str(len((common_games2))))
+        print ((common_games2))
+        #print ("found: "+str(len(common_games2))+"games: "+getNames(common_games2))
+        
+        commonbox.delete(0,tk.END)
+        commonbox.bind('<<ListboxSelect>>', cb)
+        for game in common_games2:
+            #listboxNamen = Listbox(master=frameListbox, selectmode='browse')
+            commonbox.insert('end', game)
+        
+        label_output['text']= ("List of common games: "+str(len((common_games2))))
 
-# Build GUI
-main_window = tk.Tk()
-main_window.title("SteamGames")
+    def cb(event):
+        logging.debug(str(event) + '\n' + str(commonbox.curselection()))
 
+    def select(event):
+        i = commonbox.curselection()[0]
+        item.set(items[i])
+        print(str(event) + '\n' + str(item))
 
-frame_input = tk.Frame(main_window)
-frame_input.pack()
+    
+    # Build GUI
+    main_window = tk.Tk()
+    main_window.title("SteamGames")
+    # Grid-Frame for inputs
+    frame_input = tk.Frame(main_window)
+    frame_input.pack()
 
+    label_input = tk.Label(frame_input, text = "Compare Steam Libraries ")
+    label_input.grid(row = 1, column = 2)
+    btn = tk.Button(frame_input,text ='Path1', command = open_file1) 
+    btn.grid(row = 2, column = 1)
+    entry_Path1 = tk.Entry(frame_input)
+    entry_Path1.grid(row = 2, column = 2)
+    btn2 = tk.Button(frame_input,text ='Path2', command = open_file2) 
+    btn2.grid(row = 3, column = 1)
+    entry_Path2 = tk.Entry(frame_input)
+    entry_Path2.grid(row = 3, column = 2)
+    btn3 = tk.Button(frame_input,text ='Path3', command = open_file3) 
+    btn3.grid(row = 4, column = 1)
+    entry_Path3 = tk.Entry(frame_input)
+    entry_Path3.grid(row = 4, column = 2)
+    # Pack-Frame for controls
+    frame_buttons = tk.Frame(main_window)
+    frame_buttons.pack()
+    button_add = tk.Button(frame_buttons, text="run", command=runCompare)
+    button_add.pack(side= tk.LEFT)
+    # Frame for outputs
+    frame_output = tk.Frame(main_window)
+    frame_output.pack()
+    label_output = tk.Label(frame_output, text="List of common games: ")
+    label_output.pack()
+    scrollbar = tk.Scrollbar(frame_output, orient="vertical")
+    commonbox = tk.Listbox(frame_output,width=50, height=20, yscrollcommand=scrollbar.set)
+    scrollbar.config(command=commonbox.yview)
+    scrollbar.pack(side="right", fill="y")
+    commonbox.pack(side="left",fill=tk.BOTH, expand=True)
+    # Load Values for inputs
+    loadConfig()
+    
 
-label_input = tk.Label(frame_input, text = "Compare Steam Libraries ")
-label_input.grid(row = 1, column = 2)
-
-btn = tk.Button(frame_input,text ='Path1', command = open_file1) 
-btn.grid(row = 2, column = 1)
-
-entry_Path1 = tk.Entry(frame_input)
-entry_Path1.grid(row = 2, column = 2)
-
-btn2 = tk.Button(frame_input,text ='Path2', command = open_file2) 
-btn2.grid(row = 3, column = 1)
-
-entry_Path2 = tk.Entry(frame_input)
-entry_Path2.grid(row = 3, column = 2)
-
-btn3 = tk.Button(frame_input,text ='Path3', command = open_file3) 
-btn3.grid(row = 4, column = 1)
-
-entry_Path3 = tk.Entry(frame_input)
-entry_Path3.grid(row = 4, column = 2)
-
-
-#frame = tk.Frame(main_window)
-#frame.pack()
-#entry_num1 = tk.Entry(frame)
-#entry_num1.pack(side= tk.LEFT)
-#entry_num2 = tk.Entry(frame)
-#entry_num2.pack(side = tk.LEFT)
-#label_action = tk.Label(main_window, text="Select Files")
-#label_action.pack()
-frame_buttons = tk.Frame(main_window)
-frame_buttons.pack()
-
-
-
-frame_output = tk.Frame(main_window)
-frame_output.pack()
-
-
-
-button_add = tk.Button(frame_buttons, text="run", command=runCompare)
-button_add.pack(side= tk.LEFT)
-#button_add1 = tk.Button(frame_buttons, text="read1", command=run1)
-#button_add1.pack(side= tk.LEFT)
-#button_add = tk.Button(frame_buttons, text="-", command=calc_sub)
-#button_add.pack(side= tk.LEFT)
-#button_add = tk.Button(frame_buttons, text="*", command=calc_add)
-#button_add.pack(side= tk.LEFT)
-#button_add = tk.Button(frame_buttons, text="/", command=calc_add)
-#button_add.pack(side= tk.LEFT)
-#label_result = tk.Label(main_window, text="Ergebnis: ")
-#label_result.pack()
-#entry_result = tk.Entry(main_window)
-#entry_result.pack()
-
-# Rahmen Listbox
-#frameListbox = tk.Frame(master=main_window, bg='#FFCFC9')
-#frameListbox.place(x=5, y=5, width=110, height=80)
-#commonbox = Listbox(master=main_window, selectmode='browse')
-label_output = tk.Label(frame_output, text="List of common games: ")
-label_output.pack()
-
-scrollbar = tk.Scrollbar(frame_output, orient="vertical")
-commonbox = tk.Listbox(frame_output,width=50, height=20, yscrollcommand=scrollbar.set)
-scrollbar.config(command=commonbox.yview)
-scrollbar.pack(side="right", fill="y")
-commonbox.pack(side="left",fill=tk.BOTH, expand=True)
-
-
-#commonbox.place(width=80, height=180)
-
-loadConfig()
-
+# Only run GUI when not called as module
+logging.debug("Module run by: "+str(__name__))
+if __name__ == "__main__":
+    main()
+    
 logging.debug("End of program")
-
