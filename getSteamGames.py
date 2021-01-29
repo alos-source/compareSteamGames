@@ -202,25 +202,25 @@ frame_input.pack()
 
 
 label_input = tk.Label(frame_input, text = "Compare Steam Libraries ")
-label_input.pack()
+label_input.grid(row = 1, column = 2)
 
 btn = tk.Button(frame_input,text ='Path1', command = open_file1) 
-btn.pack(side = tk.LEFT)
+btn.grid(row = 2, column = 1)
 
 entry_Path1 = tk.Entry(frame_input)
-entry_Path1.pack(side= tk.LEFT)
+entry_Path1.grid(row = 2, column = 2)
 
 btn2 = tk.Button(frame_input,text ='Path2', command = open_file2) 
-btn2.pack(side = tk.LEFT)
+btn2.grid(row = 3, column = 1)
 
 entry_Path2 = tk.Entry(frame_input)
-entry_Path2.pack(side= tk.LEFT)
+entry_Path2.grid(row = 3, column = 2)
 
 btn3 = tk.Button(frame_input,text ='Path3', command = open_file3) 
-btn3.pack(side = tk.LEFT)
+btn3.grid(row = 4, column = 1)
 
 entry_Path3 = tk.Entry(frame_input)
-entry_Path3.pack(side= tk.LEFT)
+entry_Path3.grid(row = 4, column = 2)
 
 
 #frame = tk.Frame(main_window)
