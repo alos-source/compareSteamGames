@@ -133,7 +133,7 @@ def open_file1():
     #if file is not None: 
     #    content = file.read()
     
-    
+    entry_Path1.delete(0,tk.END)
     entry_Path1.insert(0,name)
 
 def open_file2():
@@ -143,6 +143,7 @@ def open_file2():
     #file = askopenfile(title = "Files", filetypes =[('Python Files', '*.docx')]) 
     #if file is not None: 
     #    content = file.read()
+    entry_Path2.delete(0,tk.END)
     entry_Path2.insert(0,name)
 
 def open_file3():
@@ -152,6 +153,7 @@ def open_file3():
     #file = askopenfile(title = "Files", filetypes =[('Python Files', '*.docx')]) 
     #if file is not None: 
     #    content = file.read()
+    entry_Path3.delete(0,tk.END)    
     entry_Path3.insert(0,name)
 
 common_games1 = ([])
