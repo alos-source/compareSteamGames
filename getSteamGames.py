@@ -262,8 +262,14 @@ button_add.pack(side= tk.LEFT)
 #commonbox = Listbox(master=main_window, selectmode='browse')
 label_output = tk.Label(frame_output, text="List of common games: ")
 label_output.pack()
-commonbox = tk.Listbox(frame_output)
-commonbox.pack()
+
+scrollbar = tk.Scrollbar(frame_output, orient="vertical")
+commonbox = tk.Listbox(frame_output,width=50, height=20, yscrollcommand=scrollbar.set)
+scrollbar.config(command=commonbox.yview)
+scrollbar.pack(side="right", fill="y")
+commonbox.pack(side="left",fill=tk.BOTH, expand=True)
+
+
 #commonbox.place(width=80, height=180)
 
 loadConfig()
