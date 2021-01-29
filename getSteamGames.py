@@ -65,6 +65,30 @@ def getGamesNames(PATH):
     return games
 
 
+def compare(PATH1,PATH2,PATH3):
+    # Read game lists for three players
+    gamesNames1 = getNames(getGamesNames(PATH1))
+    gamesIDs1 = getGamesIDs(PATH1)
+    gamesNames2 = getNames(getGamesNames(PATH2))
+    gamesIDs2 = getGamesIDs(PATH2)
+    gamesNames3 = getNames(getGamesNames(PATH3))
+    gamesIDs3 = getGamesIDs(PATH3)
+    
+    # Find matches
+    common_games1 = getCommon(gamesNames1, gamesNames3)
+    common_games1ID = getCommon(gamesNames1, gamesNames2)
+    #print (common_games1)
+    common_games2 = getCommon(gamesNames2,common_games1)
+    
+    # print ("found games1: ")
+    # print ((common_games1))
+    logging.info("found common games: " +str(len((common_games2))))
+    print ("found common games: " +str(len((common_games2))))
+    print ((common_games2))
+    #print ("found: "+str(len(common_games2))+"games: "+getNames(common_games2))
+    return common_games2
+
+
 # Compare two game-sets and create a set of matching games
 def getCommon(games1, games2):
     common_games = ([])
@@ -101,10 +125,6 @@ def gameLink(NUMBER):
 def defineFileName(filename):
     filename = askopenfilename()
 
-def askopenfile():
-   return askopenfile()
-
-
 def run1():
     getGamesNames(str(entry_Path1.get()))
 
@@ -120,7 +140,6 @@ def main():
                 csvReader = csv.reader(f)
                 for row in csvReader:
                     files.append(row[0])
-                #text = f.read()
                 logging.debug("config loaded: "+ files[0]+ files[1])
                 entry_Path1.insert(0,files[0])
                 entry_Path2.insert(0,files[1])
@@ -131,10 +150,6 @@ def main():
     def open_file1():
         name= askopenfilename(initialdir = "./",title = "Select file",filetypes = (("html-Files","*.html"),("all files","*.*")))
         print (name)
-        #return name
-        #file = askopenfile(title = "Files", filetypes =[('Python Files', '*.docx')]) 
-        #if file is not None: 
-        #    content = file.read()
         
         entry_Path1.delete(0,tk.END)
         entry_Path1.insert(0,name)
@@ -142,52 +157,25 @@ def main():
     def open_file2():
         name= askopenfilename(initialdir = "./",title = "Select file",filetypes = (("html-Files","*.html"),("all files","*.*")))
         print (name)
-        #return name
-        #file = askopenfile(title = "Files", filetypes =[('Python Files', '*.docx')]) 
-        #if file is not None: 
-        #    content = file.read()
+
         entry_Path2.delete(0,tk.END)
         entry_Path2.insert(0,name)
 
     def open_file3():
         name= askopenfilename(initialdir = "./",title = "Select file",filetypes = (("html-Files","*.html"),("all files","*.*")))
         print (name)
-        #return name
-        #file = askopenfile(title = "Files", filetypes =[('Python Files', '*.docx')]) 
-        #if file is not None: 
-        #    content = file.read()
+
         entry_Path3.delete(0,tk.END)    
         entry_Path3.insert(0,name)
-
+        
     def runCompare():
-        # Read game lists for three players
-        gamesNames1 = getNames(getGamesNames(str(entry_Path1.get())))
-        gamesIDs1 = getGamesIDs(entry_Path1.get())
-        gamesNames2 = getNames(getGamesNames(entry_Path2.get()))
-        gamesIDs2 = getGamesIDs(entry_Path2.get())
-        gamesNames3 = getNames(getGamesNames(entry_Path3.get()))
-        gamesIDs3 = getGamesIDs(entry_Path3.get())
-        
-        # Find matches
-        common_games1 = getCommon(gamesNames1, gamesNames3)
-        common_games1ID = getCommon(gamesNames1, gamesNames2)
-        #print (common_games1)
-        common_games2 = getCommon(gamesNames2,common_games1)
-        
-        # print ("found games1: ")
-        # print ((common_games1))
-        logging.info("found common games: " +str(len((common_games2))))
-        print ("found common games: " +str(len((common_games2))))
-        print ((common_games2))
-        #print ("found: "+str(len(common_games2))+"games: "+getNames(common_games2))
-        
+        common_games = compare(entry_Path1.get(),entry_Path2.get(),entry_Path3.get())
         commonbox.delete(0,tk.END)
         commonbox.bind('<<ListboxSelect>>', cb)
-        for game in common_games2:
-            #listboxNamen = Listbox(master=frameListbox, selectmode='browse')
+        for game in common_games:
             commonbox.insert('end', game)
         
-        label_output['text']= ("List of common games: "+str(len((common_games2))))
+        label_output['text']= ("List of common games: "+str(len((common_games))))
 
     def cb(event):
         logging.debug(str(event) + '\n' + str(commonbox.curselection()))
