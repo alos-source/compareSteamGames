@@ -4,7 +4,10 @@
 # ignore runtime files
 *.log
 *.cfg
+__pycache__/
 
 # ignore HTML-Folder
 steamHTML/
 
+# ignore test files
+test_*

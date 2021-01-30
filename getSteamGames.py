@@ -5,6 +5,7 @@ import tkinter as tk
 from tkinter.filedialog import askopenfilename
 from pathlib import Path
 import csv
+import webbrowser
 
 
 logging.basicConfig(filename="steamGames.log", level=logging.DEBUG, format="%(asctime)s - %(levelname)s - %(message)s)")
@@ -192,6 +193,8 @@ def main():
         item.set(items[i])
         print(str(event) + '\n' + str(item))
 
+    def callback(event):
+        webbrowser.open_new(event.widget.cget("text"))
     
     # Build GUI
     main_window = tk.Tk()
@@ -229,6 +232,12 @@ def main():
     scrollbar.config(command=commonbox.yview)
     scrollbar.pack(side="right", fill="y")
     commonbox.pack(side="left",fill=tk.BOTH, expand=True)
+
+    label_footer = tk.Label(main_window,  text=r"https://github.com/alos-source/compareSteamGames", fg="blue", cursor="hand2")
+    label_footer.pack()
+    label_footer.bind("<Button-1>", callback)
+
+
     # Load Values for inputs
     loadConfig()
     
