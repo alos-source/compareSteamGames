@@ -199,6 +199,7 @@ def main():
     # Build GUI
     main_window = tk.Tk()
     main_window.title("SteamGames")
+    #main_window.iconbitmap(r"media/icon.ico")
     # Grid-Frame for inputs
     frame_input = tk.Frame(main_window)
     frame_input.pack()

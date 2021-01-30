@@ -6,8 +6,9 @@
 *.cfg
 __pycache__/
 
-# ignore HTML-Folder
+# ignore non free content
 steamHTML/
+media/
 
 # ignore test files
 test_*
