@@ -1,12 +1,10 @@
 #! python3
-
-import logging, re#, bs4, requests, sys
+import logging, re #, sys #, bs4, requests, 
 import tkinter as tk
 from tkinter.filedialog import askopenfilename
 from pathlib import Path
 import csv
 import webbrowser
-
 
 logging.basicConfig(filename="steamGames.log", level=logging.DEBUG, format="%(asctime)s - %(levelname)s - %(message)s)")
 
@@ -21,9 +19,9 @@ configname="config.cfg"
 files=[]
 common_games1 = ([])
 common_games2= ([])
-datei1 = pfad+dateiname1
-datei2 = pfad+dateiname2
-datei3 = pfad+dateiname3
+#datei1 = pfad+dateiname1
+#datei2 = pfad+dateiname2
+#datei3 = pfad+dateiname3
 config = configname
    
 
@@ -199,6 +197,7 @@ def main():
     # Build GUI
     main_window = tk.Tk()
     main_window.title("SteamGames")
+    
     #main_window.iconbitmap(r"media/icon.ico")
     # Grid-Frame for inputs
     frame_input = tk.Frame(main_window)
@@ -241,7 +240,7 @@ def main():
 
     # Load Values for inputs
     loadConfig()
-    
+    main_window.mainloop()
 
 # Only run GUI when not called as module
 logging.debug("Module run by: "+str(__name__))
