@@ -23,6 +23,7 @@ common_games2= ([])
 #datei2 = pfad+dateiname2
 #datei3 = pfad+dateiname3
 config = configname
+version = "20210202"
    
 
 # Create Games-Array by STEAM-User HTML File
@@ -236,6 +237,8 @@ def main():
     label_footer = tk.Label(main_window,  text=r"https://github.com/alos-source/compareSteamGames", fg="blue", cursor="hand2")
     label_footer.pack()
     label_footer.bind("<Button-1>", callback)
+    label_version = tk.Label(main_window,  text="Version: "+version)
+    label_version.pack()
 
 
     # Load Values for inputs
