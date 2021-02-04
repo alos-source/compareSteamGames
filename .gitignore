@@ -5,6 +5,7 @@
 *.log
 *.cfg
 __pycache__/
+*.pyc
 
 # ignore non free content
 steamHTML/
