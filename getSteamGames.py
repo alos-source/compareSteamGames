@@ -23,7 +23,7 @@ common_games2= ([])
 #datei2 = pfad+dateiname2
 #datei3 = pfad+dateiname3
 config = configname
-version = "20210202"
+version = "20210206"
    
 
 # Create Games-Array by STEAM-User HTML File
@@ -182,7 +182,7 @@ def main():
         for game in common_games:
             commonbox.insert('end', game)
         
-        label_output['text']= ("List of common games: "+str(len((common_games))))
+        label_output['text']= (STRINGS[LANG]["LABELOUTPUT"]+str(len((common_games))))
 
     def cb(event):
         logging.debug(str(event) + '\n' + str(commonbox.curselection()))
@@ -195,6 +195,22 @@ def main():
     def callback(event):
         webbrowser.open_new(event.widget.cget("text"))
     
+    LANG = "EN"
+    
+    STRINGS = {
+    
+    "DE" :{
+		"Path":"Pfad",
+                "LABELINPUT":"Vergleiche Bibliotheken",
+                "LABELOUTPUT":"Gemeinsame Spiele: "
+    },
+    "EN":{
+		"Path":"Path",
+    		"LABELINPUT":"Compare Libraries",
+                "LABELOUTPUT":"Common Games: "                
+    }
+    }
+    
     # Build GUI
     main_window = tk.Tk()
     main_window.title("SteamGames")
@@ -204,17 +220,17 @@ def main():
     frame_input = tk.Frame(main_window)
     frame_input.pack()
 
-    label_input = tk.Label(frame_input, text = "Compare Steam Libraries ")
+    label_input = tk.Label(frame_input, text = STRINGS[LANG]["LABELINPUT"])
     label_input.grid(row = 1, column = 2)
-    btn = tk.Button(frame_input,text ='Path1', command = open_file1) 
+    btn = tk.Button(frame_input,text =(STRINGS[LANG]["Path"]+" 1"), command = open_file1) 
     btn.grid(row = 2, column = 1)
     entry_Path1 = tk.Entry(frame_input)
     entry_Path1.grid(row = 2, column = 2)
-    btn2 = tk.Button(frame_input,text ='Path2', command = open_file2) 
+    btn2 = tk.Button(frame_input,text =(STRINGS[LANG]["Path"]+" 2"), command = open_file2) 
     btn2.grid(row = 3, column = 1)
     entry_Path2 = tk.Entry(frame_input)
     entry_Path2.grid(row = 3, column = 2)
-    btn3 = tk.Button(frame_input,text ='Path3', command = open_file3) 
+    btn3 = tk.Button(frame_input,text =(STRINGS[LANG]["Path"]+" 3"), command = open_file3) 
     btn3.grid(row = 4, column = 1)
     entry_Path3 = tk.Entry(frame_input)
     entry_Path3.grid(row = 4, column = 2)
@@ -226,7 +242,7 @@ def main():
     # Frame for outputs
     frame_output = tk.Frame(main_window)
     frame_output.pack()
-    label_output = tk.Label(frame_output, text="List of common games: ")
+    label_output = tk.Label(frame_output, text=STRINGS[LANG]["LABELOUTPUT"])
     label_output.pack()
     scrollbar = tk.Scrollbar(frame_output, orient="vertical")
     commonbox = tk.Listbox(frame_output,width=50, height=20, yscrollcommand=scrollbar.set)
