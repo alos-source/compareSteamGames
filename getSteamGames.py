@@ -7,27 +7,17 @@ import csv
 import webbrowser
 import locale
 
-logging.basicConfig(filename="steamGames.log", level=logging.DEBUG, format="%(asctime)s - %(levelname)s - %(message)s)")
-
-localCode = locale.getdefaultlocale()[0]
-logging.debug(localCode)
-print (localCode)
-
+logging.basicConfig(filename="steamGames.log", level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s)")
 
 logging.debug("Start of programm")
+localCode = locale.getdefaultlocale()[0]
+logging.debug("OS runnging on: "+localCode)
 
-pfad = "steamHTML\\" # all steam-user HTML-Files should be placed in this directory
-#dateiname1="SteamGames1.html"
-#dateiname2="SteamGames2.html"
-#dateiname3="SteamGames3.html"
 configname="config.cfg"
 
 files=[]
 common_games1 = ([])
 common_games2= ([])
-#datei1 = pfad+dateiname1
-#datei2 = pfad+dateiname2
-#datei3 = pfad+dateiname3
 config = configname
 version = "20210206"
 global LANG
@@ -95,8 +85,6 @@ def compare(PATH1,PATH2,PATH3):
         print("File3 not accessible")
         return common_games1
     
-    # print ("found games1: ")
-    # print ((common_games1))
     logging.info("found common games: " +str(len((common_games2))))
     print ("found common games: " +str(len((common_games2))))
     print ((common_games2))
@@ -110,9 +98,7 @@ def getCommon(games1, games2):
     for game1 in games1:
         for game2 in games2:
             if (game2 == game1):
-                #print ("append: "+game1)
                 common_games.append(game1)
-    #print('common ended')
     return common_games
 
 # extract IDs from "game_ID"-String 
@@ -120,7 +106,6 @@ def getIDs(games):
     gameIDs=([])
     for game in games:
         gameIDs.append(game[5:])
-    #print (game)sis color_disabled
     return gameIDs
 
 # strip Name
@@ -128,7 +113,6 @@ def getNames(games):
     gameNames=([])
     for game in games:
         gameNames.append(game[16:-6])
-    #print (game)
     return gameNames
 
 # create link to SteamStore from GameID
