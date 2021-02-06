@@ -207,7 +207,8 @@ def main():
     def getLang():
         localCode = locale.getdefaultlocale()[0]
         logging.debug("OS runnging on: "+localCode)
-        if localCode[:1] == "de": # slice german local code de_DE
+        logging.debug("LANG: "+localCode[:2])        
+        if localCode[:2] == "de": # slice german local code de_DE
             return "DE"
         else:
             return "EN"
