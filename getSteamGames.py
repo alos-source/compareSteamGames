@@ -283,7 +283,7 @@ def main():
     scrollbar.pack(side="right", fill="y")
     commonbox.pack(side="left",fill=tk.BOTH, expand=True)
 
-    label_footer = tk.Label(main_window,  text=r"https://github.com/alos-source/compareSteamGames", fg="blue", cursor="hand2")
+    label_footer = tk.Label(main_window,  text=r"https://github.com/alos-source", fg="blue", cursor="hand2")
     label_footer.pack()
     label_footer.bind("<Button-1>", callback)
     label_version = tk.Label(main_window,  text="Version: "+version)
