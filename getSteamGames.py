@@ -209,7 +209,7 @@ def main():
         logging.debug(str(event) + '\n' + str(commonbox.curselection()))
         selectedGame = str(commonbox.curselection())
         selectedGameName = commonbox.get(commonbox.curselection())
-
+        button_store["state"] = "normal"
 
     def select(event):
         i = commonbox.curselection()[0]
@@ -279,7 +279,7 @@ def main():
     frame_buttons.pack()
     button_run = tk.Button(frame_buttons, text="run", command=runCompare)
     button_run.pack(side= tk.LEFT)
-    button_store = tk.Button(frame_buttons, text="Browse Store", command=searchStore)
+    button_store = tk.Button(frame_buttons, text="Browse Store", command=searchStore, state = "disabled")
     button_store.pack(side= tk.LEFT)
     
     # button_lang = tk.Button(frame_buttons, text=LANG, command=switchLang)
