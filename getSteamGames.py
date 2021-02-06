@@ -24,7 +24,8 @@ common_games2= ([])
 #datei3 = pfad+dateiname3
 config = configname
 version = "20210206"
-   
+global LANG
+LANG = "DE"
 
 # Create Games-Array by STEAM-User HTML File
 def getGamesIDs(PATH):
@@ -194,10 +195,20 @@ def main():
 
     def callback(event):
         webbrowser.open_new(event.widget.cget("text"))
-    
-    LANG = "EN"
 
+    global LANG  
     
+    def switchLang():
+        global LANG
+        if LANG == "EN":
+            LANG = "DE"
+        else:
+            LANG = "EN"
+        #print("LANG: " + str(LANG))        
+        #main_window.update()
+        #return LANG
+        
+        
     STRINGS = {
     
     "DE" :{
@@ -241,8 +252,11 @@ def main():
     # Pack-Frame for controls
     frame_buttons = tk.Frame(main_window)
     frame_buttons.pack()
-    button_add = tk.Button(frame_buttons, text="run", command=runCompare)
-    button_add.pack(side= tk.LEFT)
+    button_run = tk.Button(frame_buttons, text="run", command=runCompare)
+    button_run.pack(side= tk.LEFT)
+    # button_lang = tk.Button(frame_buttons, text=LANG, command=switchLang)
+    # button_lang.pack(side= tk.LEFT)
+
     # Frame for outputs
     frame_output = tk.Frame(main_window)
     frame_output.pack()
