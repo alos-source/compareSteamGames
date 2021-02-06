@@ -14,7 +14,6 @@ logging.debug(localCode)
 print (localCode)
 
 
-
 logging.debug("Start of programm")
 
 pfad = "steamHTML\\" # all steam-user HTML-Files should be placed in this directory
@@ -32,7 +31,7 @@ common_games2= ([])
 config = configname
 version = "20210206"
 global LANG
-LANG = "DE"
+LANG = "EN"
 global common_games
 
 # Create Games-Array by STEAM-User HTML File
@@ -240,13 +239,17 @@ def main():
                 "LANG":"Deutsch",
 		"Path":"Pfad",
                 "LABELINPUT":"Vergleiche Bibliotheken",
-                "LABELOUTPUT":"Gemeinsame Spiele: "
+                "LABELOUTPUT":"Gemeinsame Spiele: ",
+                "RUN":"Vergleiche",
+                "BROWSE":"Öffne Browser"
     },
     "EN":{
                 "LANG":"English",
 		"Path":"Path",
     		"LABELINPUT":"Compare Libraries",
-                "LABELOUTPUT":"Common Games: "                
+                "LABELOUTPUT":"Common Games: ",
+                "RUN":"Compare",
+                "BROWSE":"Open Browser"                
     }
     }
     logging.debug("Language: "+str(STRINGS[LANG]["LANG"]))
@@ -277,9 +280,9 @@ def main():
     # Pack-Frame for controls
     frame_buttons = tk.Frame(main_window)
     frame_buttons.pack()
-    button_run = tk.Button(frame_buttons, text="run", command=runCompare)
+    button_run = tk.Button(frame_buttons, text=STRINGS[LANG]["RUN"], command=runCompare)
     button_run.pack(side= tk.LEFT)
-    button_store = tk.Button(frame_buttons, text="Browse Store", command=searchStore, state = "disabled")
+    button_store = tk.Button(frame_buttons, text=STRINGS[LANG]["BROWSE"], command=searchStore, state = "disabled")
     button_store.pack(side= tk.LEFT)
     
     # button_lang = tk.Button(frame_buttons, text=LANG, command=switchLang)
