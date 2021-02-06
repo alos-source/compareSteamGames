@@ -196,21 +196,25 @@ def main():
         webbrowser.open_new(event.widget.cget("text"))
     
     LANG = "EN"
+
     
     STRINGS = {
     
     "DE" :{
+                "LANG":"Deutsch",
 		"Path":"Pfad",
                 "LABELINPUT":"Vergleiche Bibliotheken",
                 "LABELOUTPUT":"Gemeinsame Spiele: "
     },
     "EN":{
+                "LANG":"English",
 		"Path":"Path",
     		"LABELINPUT":"Compare Libraries",
                 "LABELOUTPUT":"Common Games: "                
     }
     }
-    
+    logging.debug("Language: "+str(STRINGS[LANG]["LANG"]))
+
     # Build GUI
     main_window = tk.Tk()
     main_window.title("SteamGames")
