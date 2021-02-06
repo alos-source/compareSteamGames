@@ -5,15 +5,22 @@ from tkinter.filedialog import askopenfilename
 from pathlib import Path
 import csv
 import webbrowser
+import locale
 
 logging.basicConfig(filename="steamGames.log", level=logging.DEBUG, format="%(asctime)s - %(levelname)s - %(message)s)")
+
+localCode = locale.getdefaultlocale()[0]
+logging.debug(localCode)
+print (localCode)
+
+
 
 logging.debug("Start of programm")
 
 pfad = "steamHTML\\" # all steam-user HTML-Files should be placed in this directory
-dateiname1="SteamGames1.html"
-dateiname2="SteamGames2.html"
-dateiname3="SteamGames3.html"
+#dateiname1="SteamGames1.html"
+#dateiname2="SteamGames2.html"
+#dateiname3="SteamGames3.html"
 configname="config.cfg"
 
 files=[]
@@ -26,6 +33,7 @@ config = configname
 version = "20210206"
 global LANG
 LANG = "DE"
+global common_games
 
 # Create Games-Array by STEAM-User HTML File
 def getGamesIDs(PATH):
@@ -141,6 +149,15 @@ def __init__():
     pass
 
 def main():
+
+    # create link to SteamStore from Name
+    def searchStore():
+        global selectedGame
+        global selectedGameName
+        NAME = str(common_games[int(selectedGame[1])])
+        NAME = selectedGameName
+        Search = """https://store.steampowered.com/search/?term="""+NAME+""
+        webbrowser.open_new(Search)
     
     def loadConfig():
         try:
@@ -177,6 +194,7 @@ def main():
         entry_Path3.insert(0,name)
         
     def runCompare():
+        global common_games
         common_games = compare(entry_Path1.get(),entry_Path2.get(),entry_Path3.get())
         commonbox.delete(0,tk.END)
         commonbox.bind('<<ListboxSelect>>', cb)
@@ -186,7 +204,12 @@ def main():
         label_output['text']= (STRINGS[LANG]["LABELOUTPUT"]+str(len((common_games))))
 
     def cb(event):
+        global selectedGame
+        global selectedGameName
         logging.debug(str(event) + '\n' + str(commonbox.curselection()))
+        selectedGame = str(commonbox.curselection())
+        selectedGameName = commonbox.get(commonbox.curselection())
+
 
     def select(event):
         i = commonbox.curselection()[0]
@@ -196,7 +219,9 @@ def main():
     def callback(event):
         webbrowser.open_new(event.widget.cget("text"))
 
-    global LANG  
+    global LANG
+    global selectedGame
+    global selectedGameName
     
     def switchLang():
         global LANG
@@ -254,6 +279,9 @@ def main():
     frame_buttons.pack()
     button_run = tk.Button(frame_buttons, text="run", command=runCompare)
     button_run.pack(side= tk.LEFT)
+    button_store = tk.Button(frame_buttons, text="Browse Store", command=searchStore)
+    button_store.pack(side= tk.LEFT)
+    
     # button_lang = tk.Button(frame_buttons, text=LANG, command=switchLang)
     # button_lang.pack(side= tk.LEFT)
 
