@@ -10,8 +10,6 @@ import locale
 logging.basicConfig(filename="steamGames.log", level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s)")
 
 logging.debug("Start of programm")
-localCode = locale.getdefaultlocale()[0]
-logging.debug("OS runnging on: "+localCode)
 
 configname="config.cfg"
 
@@ -205,6 +203,14 @@ def main():
     global LANG
     global selectedGame
     global selectedGameName
+
+    def getLang():
+        localCode = locale.getdefaultlocale()[0]
+        logging.debug("OS runnging on: "+localCode)
+        if localCode[:1] == "de": # slice german local code de_DE
+            return "DE"
+        else:
+            return "EN"
     
     def switchLang():
         global LANG
@@ -236,8 +242,10 @@ def main():
                 "BROWSE":"Open Browser"                
     }
     }
+    
+    LANG = getLang()
     logging.debug("Language: "+str(STRINGS[LANG]["LANG"]))
-
+    
     # Build GUI
     main_window = tk.Tk()
     main_window.title("SteamGames")
@@ -292,6 +300,7 @@ def main():
 
     # Load Values for inputs
     loadConfig()
+    
     main_window.mainloop()
 
 # Only run GUI when not called as module
