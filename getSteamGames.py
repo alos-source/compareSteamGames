@@ -19,7 +19,7 @@ common_games2= ([])
 config = configname
 version = "20210206"
 global LANG
-LANG = "DE"
+LANG = "EN"
 global common_games
 
 # Create Games-Array by STEAM-User HTML File
