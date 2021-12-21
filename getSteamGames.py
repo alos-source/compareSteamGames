@@ -3,21 +3,19 @@ import logging, re #, sys #, bs4, requests,
 import tkinter as tk
 from tkinter.filedialog import askopenfilename
 from pathlib import Path
-import csv
+#import csv
 import webbrowser
 import locale
+import json
 
-logging.basicConfig(filename="steamGames.log", level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s)")
 
-logging.debug("Start of programm")
-
-configname="config.cfg"
+configname="config.conf"
 
 files=[]
 common_games1 = ([])
 common_games2= ([])
 config = configname
-version = "20210206"
+version = "20210207"
 global LANG
 LANG = "EN"
 global common_games
@@ -34,7 +32,7 @@ def getGamesIDs(PATH):
             logging.info(PATH+" Number of games from IDs: "+str(len(games)))
             logging.debug("Finished "+PATH)
     except IOError:
-        print("File not accessible")
+        print("File not accessible: "+PATH)
     
     return games
 
@@ -54,7 +52,7 @@ def getGamesNames(PATH):
             logging.debug(games)
             logging.info(PATH+" Number of games from "+ str(userName[0]) +" by Names: "+str(len(games)))
     except IOError:
-        print("File not accessible")
+        print("File not accessible: "+PATH)
         
     
     logging.debug("Finished "+PATH)
@@ -116,21 +114,32 @@ def getNames(games):
 # create link to SteamStore from GameID
 def gameLink(NUMBER):
     NUMBER = str(NUMBER)
-    return """<a href="https://store.steampowered.com/app/"""+NUMBER+">"""
+    return """<a href=https://store.steampowered.com/app/"""+NUMBER+">"""
 
 
 def defineFileName(filename):
     filename = askopenfilename()
 
-def run1():
-    getGamesNames(str(entry_Path1.get()))
+#def run1():
+#    getGamesNames(str(entry_Path1.get()))
 
 
 def __init__():
     pass
 
 def main():
+    #global conf
+    conf = {
+    "DEBUG" : "INFO",
+    "LANG":"",
+    "PATH":["./Steam1.html","./Steam2.html","./Steam3.html"]
+        }
 
+    logging.basicConfig(filename="steamGames.log", level=logging.DEBUG, format="%(asctime)s - %(levelname)s - %(message)s)")
+
+    logging.debug("Start of programm")
+
+    
     # create link to SteamStore from Name
     def searchStore():
         global selectedGame
@@ -143,15 +152,37 @@ def main():
     def loadConfig():
         try:
             with open(config,encoding="utf8") as f:
-                csvReader = csv.reader(f)
-                for row in csvReader:
-                    files.append(row[0])
-                logging.debug("config loaded: "+ files[0]+ files[1])
-                entry_Path1.insert(0,files[0])
-                entry_Path2.insert(0,files[1])
-                entry_Path3.insert(0,files[2])
+                conf = json.load(f)
+                confLang = conf.get("LANG")
+                confDebug = conf.get("DEBUG")
+                confPath = conf.get("PATH")
+                logging.debug("config loaded LANG: "+ str(confLang))
+                logging.debug("config loaded DEBUG: "+ str(confDebug))
+                logging.debug("config loaded Path: "+ str(confPath))                
+                #logging.debug("config loaded number: "+ str(len(files)))
+                entry_Path1.insert(0,confPath[0])
+                entry_Path2.insert(0,confPath[1])
+                entry_Path3.insert(0,confPath[2])
+                #logging.debug("config loaded: "+ files[0]+ files[1])                                    
         except IOError:
-            print("File not accessible")
+            print("File not accessible"+PATH)
+        except ValueError:  # includes simplejson.decoder.JSONDecodeError
+            print('Decoding JSON has failed')
+            
+    def savePath():
+        
+        conf["PATH[0]"] = entry_Path1.get()
+        conf["PATH[1]"] = entry_Path2.get()
+        conf["PATH[2]"] = entry_Path3.get()
+        #conf.set("PATH")=confPath
+        print(conf["PATH[0]"])
+        with open(config, 'w') as f:
+            json.dump(conf, f)
+
+#    def save_obj(obj, name ):
+#       with open('obj/'+ name + '.pkl', 'wb') as f:
+#           pickle.dump(obj, f, pickle.HIGHEST_PROTOCOL)
+
 
     def open_file1():
         name= askopenfilename(initialdir = "./",title = "Select file",filetypes = (("html-Files","*.html"),("all files","*.*")))
@@ -278,8 +309,8 @@ def main():
     button_store = tk.Button(frame_buttons, text=STRINGS[LANG]["BROWSE"], command=searchStore, state = "disabled")
     button_store.pack(side= tk.LEFT)
     
-    # button_lang = tk.Button(frame_buttons, text=LANG, command=switchLang)
-    # button_lang.pack(side= tk.LEFT)
+    button_lang = tk.Button(frame_buttons, text="SAVE", command=savePath)
+    button_lang.pack(side= tk.LEFT)
 
     # Frame for outputs
     frame_output = tk.Frame(main_window)
